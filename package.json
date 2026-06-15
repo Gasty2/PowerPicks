@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "scripts\\node-runner.cmd node_modules/next/dist/bin/next dev --webpack",
-    "dev:turbopack": "scripts\\node-runner.cmd node_modules/next/dist/bin/next dev --turbopack",
-    "build": "scripts\\node-runner.cmd node_modules/next/dist/bin/next build --webpack",
-    "import:opl": "scripts\\node-runner.cmd scripts/import-openpowerlifting.mjs",
-    "start": "scripts\\node-runner.cmd node_modules/next/dist/bin/next start",
-    "lint": "scripts\\node-runner.cmd node_modules/eslint/bin/eslint.js"
+    "dev": "next dev",
+    "dev:turbopack": "next dev --turbopack",
+    "build": "next build",
+    "import:opl": "node scripts/import-openpowerlifting.mjs",
+    "start": "next start",
+    "lint": "eslint"
   },
   "dependencies": {
     "next": "16.2.7",
