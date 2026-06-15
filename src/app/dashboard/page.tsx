@@ -1,11 +1,33 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { logout } from "@/app/auth/actions";
 import { PageHeader } from "@/components/page-header";
 import { StatCard } from "@/components/stat-card";
 import { StatusBadge } from "@/components/status-badge";
 import { formatPoints } from "@/lib/format";
-import { predictions, wallet } from "@/lib/mock-data";
+import { predictions } from "@/lib/mock-data";
+import { createClient } from "@/lib/supabase/server";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+
+  if (userError || !user) {
+    redirect("/login?next=/dashboard");
+  }
+
+  const [{ data: profile }, { data: wallet }] = await Promise.all([
+    supabase.from("profiles").select("display_name, username").eq("id", user.id).maybeSingle(),
+    supabase.from("wallets").select("monthly_points, lifetime_points").eq("user_id", user.id).maybeSingle(),
+  ]);
+
+  const displayName = profile?.username ?? profile?.display_name ?? user.email ?? "PowerPicks user";
+  const email = user.email ?? "Email unavailable";
+  const monthlyPoints = wallet?.monthly_points ?? 0;
+  const lifetimePoints = wallet?.lifetime_points ?? monthlyPoints;
   const activePredictions = predictions.filter((prediction) => prediction.status === "active");
   const settledPredictions = predictions.filter((prediction) => prediction.status !== "active");
 
@@ -17,10 +39,23 @@ export default function DashboardPage() {
           title="Your points and predictions"
           description="Track monthly fantasy points, active prediction markets, and settled results."
         />
+        <section className="panel account-summary">
+          <div>
+            <p className="eyebrow">Signed in</p>
+            <h2>{displayName}</h2>
+            <p>{email}</p>
+          </div>
+          <form action={logout}>
+            <button className="button-secondary" type="submit">
+              Log out
+            </button>
+          </form>
+        </section>
+
         <div className="stats-grid">
-          <StatCard label="Monthly points" value={formatPoints(wallet.monthlyPoints)} detail="Resets for leaderboard play" />
-          <StatCard label="All-time profit" value={formatPoints(wallet.allTimeProfit)} detail="Fantasy points only" />
-          <StatCard label="Credibility score" value={`${wallet.credibilityScore}`} detail="Profile signal" />
+          <StatCard label="Monthly points" value={formatPoints(monthlyPoints)} detail="Resets for leaderboard play" />
+          <StatCard label="Lifetime points" value={formatPoints(lifetimePoints)} detail="Fantasy points only" />
+          <StatCard label="Prediction status" value="Pending" detail="Markets require source review" />
         </div>
 
         <div className="grid-2 page-section">

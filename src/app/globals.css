@@ -320,6 +320,26 @@ h3 {
   text-underline-offset: 4px;
 }
 
+.form-message {
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.85rem 1rem;
+  font-weight: 800;
+}
+
+.form-message.error {
+  border-color: #c55a4a;
+  background: rgba(197, 90, 74, 0.12);
+  color: #9b3325;
+}
+
+.form-message.success {
+  border-color: rgba(0, 106, 72, 0.35);
+  background: rgba(0, 106, 72, 0.12);
+  color: var(--green);
+}
+
 .policy-strip {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -469,6 +489,19 @@ h3 {
 .grid-3,
 .stats-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.account-summary {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.account-summary h2,
+.account-summary p {
+  margin: 0;
 }
 
 .item-card,
