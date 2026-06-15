@@ -1,0 +1,4 @@
+create index if not exists opl_meets_first_import_batch_idx on powerpicks_ingest.opl_meets(first_import_batch_id);
+create index if not exists opl_meets_last_import_batch_idx on powerpicks_ingest.opl_meets(last_import_batch_id);
+create index if not exists opl_market_trial_outcomes_import_batch_idx on powerpicks_ingest.opl_market_trial_outcomes(import_batch_id);
+create index if not exists opl_market_trial_outcomes_result_id_idx on powerpicks_ingest.opl_market_trial_outcomes(result_id);

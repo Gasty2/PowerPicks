@@ -1,0 +1,30 @@
+{
+  "name": "powerpicks",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "scripts\\node-runner.cmd node_modules/next/dist/bin/next dev --webpack",
+    "dev:turbopack": "scripts\\node-runner.cmd node_modules/next/dist/bin/next dev --turbopack",
+    "build": "scripts\\node-runner.cmd node_modules/next/dist/bin/next build --webpack",
+    "import:opl": "scripts\\node-runner.cmd scripts/import-openpowerlifting.mjs",
+    "start": "scripts\\node-runner.cmd node_modules/next/dist/bin/next start",
+    "lint": "scripts\\node-runner.cmd node_modules/eslint/bin/eslint.js"
+  },
+  "dependencies": {
+    "next": "16.2.7",
+    "pg": "^8.21.0",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^24",
+    "@types/pg": "^8.20.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.7",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
